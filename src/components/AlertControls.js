@@ -12,9 +12,7 @@ AlertControls.propTypes = {
 };
 export default function AlertControls(props) {
 
-  console.log('AlertContols', props)
   const { alerts, actions } = props;
-  console.log('alerts',alerts, isArray(alerts) )
   const [inputText, setInputText] = useState("");
   const handleInput = e => setInputText(e.target.value);
   const handleAddTodo = () => {
@@ -31,13 +29,7 @@ export default function AlertControls(props) {
 
   return (
     <Layout>
-      <TodoInput
-        value={inputText}
-        addTodo={handleAddTodo}
-        onChange={handleInput}
-        onKeyDown={handleKeyPress}
-      />
-      
+     
     </Layout>
   );
 }

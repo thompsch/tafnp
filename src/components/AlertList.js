@@ -11,7 +11,6 @@ export default function AlertList(user) {
 
   const [alerts, setAlerts] = useState(user.alerts);
 
-  console.log('do I reload?')
   return (
     <ErrorBoundary>
       <List>

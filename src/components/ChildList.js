@@ -1,51 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import ErrorBoundary from "react-error-boundary";
-import AlertItem from "./AlertItem";
+import ChildItem from "./ChildItem";
 
 ChildList.propTypes = {
-  items: PropTypes.array,
-  actions: PropTypes.object,
+  user: PropTypes.object
 };
-export default function ChildList(props) {
-  const { items, hasHadTodos, actions } = props;
+export default function ChildList(user) {
+
+  const [children, setChildren] = useState(user.children);
 
   return (
     <ErrorBoundary>
       <List>
-       
+        {children.map((child, index) => (
+          <ChildItem
+            key={child.name}
+            index={index}
+            child={child}
+            onChange={changedChild}
+          />
+        ))}
       </List>
     </ErrorBoundary>
   );
-}
-const NoAlertItems = props => {
-  const Layout = styled.div`
-    text-align: center;
-    font-size: 2em;
-    padding-top: 60px;
-    padding-bottom: 60px;
-  `;
 
-  return (
-    <Layout>
-      {props.hasHadTodos ? (
-        <span>
-          <span role="img" aria-label="celebrate">
-            {" "}
-            🎉{" "}
-          </span>
-          All done! Enjoy your day!
-        </span>
-      ) : (
-        <span>
-          Enter some text and click <strong>Add</strong> to save your first
-          to-do task
-        </span>
-      )}
-    </Layout>
-  );
-};
+  function changedChild(index, child){
+      children[index] = child;
+      setChildren(children);
+  }
+}
+
 const List = styled.ul`
   padding: 0;
   margin-top: 10px;

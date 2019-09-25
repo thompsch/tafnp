@@ -5,19 +5,20 @@ import ErrorBoundary from "react-error-boundary";
 // To-Do Components & Hooks
 import ChildList from "./ChildList";
 import AlertList from "./AlertList";
-import AlertControls from "./AlertControls";
-import {getCurrentUser} from "./../stitch/"
+import User from "./User";
+//import AlertControls from "./AlertControls";
+import { getCurrentUser } from "./../stitch/"
 import { Card, CardTitle } from "reactstrap";
 
 AlertApp.propTypes = {};
 export default function AlertApp() {
 
   const [user, setUser] = useState(user && user._id ? user : {});
- 
+
   if (user == undefined || user._id === undefined) {
-    getCurrentUser().then(foo=>{
+    getCurrentUser().then(foo => {
       setUser(foo)
-     });
+    });
 
     return (
       <ErrorBoundary>
@@ -26,9 +27,9 @@ export default function AlertApp() {
             <Title>
               <h1>Loading...</h1>
             </Title>
-            </AlertCard>
-            </Layout>
-            </ErrorBoundary>
+          </AlertCard>
+        </Layout>
+      </ErrorBoundary>
     )
   }
 
@@ -39,11 +40,10 @@ export default function AlertApp() {
           <Title>
             <h1>Your Settings and Preferences</h1>
           </Title>
-          name, email, etc. here
-          <h3>Chil(ren)</h3>
+          <User {...user} />
+          <h3>Child(ren)</h3>
           <ChildList {...user} />
           <h3>Your Alert Preferences</h3>
-          <AlertControls {...user} />
           <AlertList {...user} />
         </AlertCard>
       </Layout>
