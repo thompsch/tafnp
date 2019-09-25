@@ -7,9 +7,9 @@ import ChildItem from "./ChildItem";
 ChildList.propTypes = {
   user: PropTypes.object
 };
-export default function ChildList(user) {
+export default function ChildList(props) {
 
-  var [user, setUser] = useState(user);
+  var user = props;
 
   return (
     <ErrorBoundary>
@@ -28,7 +28,7 @@ export default function ChildList(user) {
 
   function changedChild(index, child){
       user.children[index] = child;
-      setUser(user);
+      user = user;
       user.updateUser(user);
   }
 }

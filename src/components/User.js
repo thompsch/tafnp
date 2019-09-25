@@ -47,6 +47,3 @@ export default function User(props){
     updateUser();
   }
 }
-
-/*   <Input name="useremail" value={user.email} onChange={e=>onChangedInput(e)}/>
-<Input name="userphone" value={user.phone} onChange={e=>onChangedInput(e)}/>*/

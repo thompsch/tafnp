@@ -9,9 +9,9 @@ AlertList.propTypes = {
   updateUser: PropTypes.func
 };
 
-export default function AlertList(user) {
-  var [user, setUser] = useState(user);
-
+export default function AlertList(props) {
+  var user = props;
+  
   return (
     <ErrorBoundary>
       <List>
@@ -29,7 +29,7 @@ export default function AlertList(user) {
 
   function setAlertStatus(index, item){
       user.alerts[index].subscribed = !item.subscribed;
-      setUser(user);
+      user = (user);
       user.updateUser(user);
   }
 }

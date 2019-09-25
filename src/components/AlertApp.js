@@ -9,13 +9,16 @@ import { getCurrentUser } from "./../stitch/"
 import { Card, CardTitle, Button, Input } from "reactstrap";
 
 AlertApp.propTypes = {};
+
 export default function AlertApp() {
 
   const [user, setUser] = useState(user && user._id ? user : {});
-  
+  const [name, setName] = useState("");
+
   if (user == undefined || user._id === undefined) {
     getCurrentUser().then(foo => {
       setUser(foo)
+      setName(foo.name);
     });
 
     return (
@@ -38,25 +41,30 @@ export default function AlertApp() {
           <Title>
             <h1>Your Settings and Preferences</h1>
           </Title>
-            <User updateUser={()=>onChangedField(user)} user={user}/>
+          <Card>
+            <Input name="username" value={name} onChange={(e)=>{user.name=(e.target.value);setName(user.name);setUser(user);}}/>
+            <Input name="useremail" value={user.email} onChange={()=>setUser(user)} />
+            <Input name="userphone" value={user.phone} onChange={()=>setUser(user)}/>
+        </Card> 
+           
           <h3>Child(ren)</h3>
-          <ChildList updateUser={()=>updateUser(user)} {...user} />
+          <ChildList updateUser={(u)=>updateUser(u)} {...user} />
           <h3>Your Alert Preferences</h3>
-          <AlertList updateUser={()=>updateUser(user)} {...user} />
+          <AlertList updateUser={(u)=>updateUser(u)} {...user} />
         </AlertCard>
         <Button onClick={()=>saveUser()}>Save My Changes</Button>
       </Layout>
     </ErrorBoundary>
   );
-
+  
   function onChangedField(user){
     console.log('onChangedField', user)
      setUser(user);
     console.log(user.name)
   }
 
-  function updateUser(user){
-    console.log('a',user.name)
+  function updateUser(u){
+    console.log('a',u.name)
     setUser(user);
     console.log('b',user.name)
   }
@@ -86,3 +94,5 @@ const Title = styled(CardTitle)`
     margin: 0;
   }
 `;
+
+// <User updateUser={()=>onChangedField(user)} user={user}/>
