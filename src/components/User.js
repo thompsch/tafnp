@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import ErrorBoundary from "react-error-boundary";
-import { Card, CardBody, Input, InputGroup, Label } from "reactstrap";
+import { Card, CardBody, CardHeader, Input, InputGroup, Label } from "reactstrap";
 
 User.propTypes = {
   user: PropTypes.object,
@@ -18,9 +18,12 @@ export default function User(props){
   return (
     <ErrorBoundary>
         <Card>
-            <Input name="username" value={name} onChange={e=>onChangedInput(e)}/>
-            <Input name="useremail" value={email} onChange={e=>onChangedInput(e)}/>
-            <Input name="userphone" value={phone} onChange={e=>onChangedInput(e)}/>
+          <CardHeader>Your Contract Information</CardHeader>
+          <CardBody>
+            <Input name="username" value={name} onChange={(e)=>onChangedInput(e)}/>
+            <Input name="useremail" value={email} onChange={(e)=>onChangedInput(e)}/>
+            <Input name="userphone" value={phone} onChange={(e)=>onChangedInput(e)}/>
+            </CardBody>
         </Card> 
     </ErrorBoundary>
   );
@@ -43,7 +46,6 @@ export default function User(props){
             break;
         }
     }
-    console.log('sending user', user)
-    updateUser();
+    updateUser(user);
   }
 }

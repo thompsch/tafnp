@@ -5,7 +5,7 @@ import ErrorBoundary from "react-error-boundary";
 import ChildList from "./ChildList";
 import AlertList from "./AlertList";
 import User from "./User";
-import { getCurrentUser } from "./../stitch/"
+import { getCurrentUser,saveCurrentUser } from "./../stitch/"
 import { Card, CardTitle, Button, Input } from "reactstrap";
 
 AlertApp.propTypes = {};
@@ -41,12 +41,9 @@ export default function AlertApp() {
           <Title>
             <h1>Your Settings and Preferences</h1>
           </Title>
-          <Card>
-            <Input name="username" value={name} onChange={(e)=>{user.name=(e.target.value);setName(user.name);setUser(user);}}/>
-            <Input name="useremail" value={user.email} onChange={()=>setUser(user)} />
-            <Input name="userphone" value={user.phone} onChange={()=>setUser(user)}/>
-        </Card> 
-           
+
+          <User updateUser={(u)=>updateUser(u)} user={user}/>
+ 
           <h3>Child(ren)</h3>
           <ChildList updateUser={(u)=>updateUser(u)} {...user} />
           <h3>Your Alert Preferences</h3>
@@ -71,6 +68,7 @@ export default function AlertApp() {
 
   function saveUser(){
     console.log(user);
+    saveCurrentUser(user);
   }
 }
 const Layout = styled.div`
@@ -96,3 +94,10 @@ const Title = styled(CardTitle)`
 `;
 
 // <User updateUser={()=>onChangedField(user)} user={user}/>
+
+/*
+  <Input name="username" value={name} onChange={(e)=>{user.name=(e.target.value);setName(user.name);setUser(user);}}/>
+            <Input name="useremail" value={user.email} onChange={()=>setUser(user)} />
+            <Input name="userphone" value={user.phone} onChange={()=>setUser(user)}/>
+            
+            */

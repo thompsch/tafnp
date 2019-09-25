@@ -17,3 +17,11 @@ export async function getCurrentUser() {
     return result.user})
     .catch(ohshit=>{console.error(ohshit)});
 }
+
+export async function saveCurrentUser(user) {
+  console.log("I'm going to replace the existing user with this new info", user)
+  return await usersCollection.findOneAndReplace({_id: user._id}, user, {upsert:true})
+  .then(result=>{
+    return result.user})
+    .catch(ohshit=>{console.error(ohshit)});
+}
