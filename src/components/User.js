@@ -5,15 +5,16 @@ import ErrorBoundary from "react-error-boundary";
 import { Card, CardBody, Input, InputGroup, Label } from "reactstrap";
 
 User.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  updateUser: PropTypes.func
 };
 
-export default function User(user) {
-
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [phone, setPhone] = useState(user.phone);
-
+export default function User(props){
+  var {user, updateUser} = props
+  var [name, setName] = useState(user.name);
+  var [email, setEmail] = useState(user.email);
+  var [phone, setPhone] = useState(user.phone);
+  
   return (
     <ErrorBoundary>
         <Card>
@@ -27,21 +28,25 @@ export default function User(user) {
   function onChangedInput(e){
     switch(e.target.name) {
           case 'username': {
-          user.name = e.target.value;
-          setName(e.target.value);
-          break;
+            user.name = e.target.value;
+            setName(user.name);
+            break;
           }
           case 'useremail': {
-          user.email = e.target.value;
-          setEmail(e.target.value);
-          break;
+            user.email = e.target.value
+            setEmail(user.email);
+            break;
           }
           case 'userphone': {
-            user.phone = e.target.value;
-            setPhone(e.target.value);
+            user.phone = e.target.value
+            setPhone(user.phone);
             break;
-      }
+        }
+    }
+    console.log('sending user', user)
+    updateUser();
   }
- // onChange(index, item);
 }
-}
+
+/*   <Input name="useremail" value={user.email} onChange={e=>onChangedInput(e)}/>
+<Input name="userphone" value={user.phone} onChange={e=>onChangedInput(e)}/>*/

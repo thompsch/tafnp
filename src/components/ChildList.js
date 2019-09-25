@@ -9,12 +9,12 @@ ChildList.propTypes = {
 };
 export default function ChildList(user) {
 
-  const [children, setChildren] = useState(user.children);
+  var [user, setUser] = useState(user);
 
   return (
     <ErrorBoundary>
       <List>
-        {children.map((child, index) => (
+        {user.children.map((child, index) => (
           <ChildItem
             key={child.name}
             index={index}
@@ -27,8 +27,9 @@ export default function ChildList(user) {
   );
 
   function changedChild(index, child){
-      children[index] = child;
-      setChildren(children);
+      user.children[index] = child;
+      setUser(user);
+      user.updateUser(user);
   }
 }
 

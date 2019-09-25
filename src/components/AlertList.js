@@ -5,16 +5,17 @@ import ErrorBoundary from "react-error-boundary";
 import AlertItem from "./AlertItem";
 
 AlertList.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  updateUser: PropTypes.func
 };
-export default function AlertList(user) {
 
-  const [alerts, setAlerts] = useState(user.alerts);
+export default function AlertList(user) {
+  var [user, setUser] = useState(user);
 
   return (
     <ErrorBoundary>
       <List>
-        {alerts.map((item, index) => (
+        {user.alerts.map((item, index) => (
           <AlertItem
             key={item.type}
             index={index}
@@ -27,8 +28,9 @@ export default function AlertList(user) {
   );
 
   function setAlertStatus(index, item){
-      alerts[index].subscribed = !item.subscribed;
-      setAlerts(alerts)
+      user.alerts[index].subscribed = !item.subscribed;
+      setUser(user);
+      user.updateUser(user);
   }
 }
 

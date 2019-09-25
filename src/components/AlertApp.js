@@ -2,19 +2,17 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import ErrorBoundary from "react-error-boundary";
-// To-Do Components & Hooks
 import ChildList from "./ChildList";
 import AlertList from "./AlertList";
 import User from "./User";
-//import AlertControls from "./AlertControls";
 import { getCurrentUser } from "./../stitch/"
-import { Card, CardTitle } from "reactstrap";
+import { Card, CardTitle, Button, Input } from "reactstrap";
 
 AlertApp.propTypes = {};
 export default function AlertApp() {
 
   const [user, setUser] = useState(user && user._id ? user : {});
-
+  
   if (user == undefined || user._id === undefined) {
     getCurrentUser().then(foo => {
       setUser(foo)
@@ -31,8 +29,8 @@ export default function AlertApp() {
         </Layout>
       </ErrorBoundary>
     )
-  }
-
+  } 
+ 
   return (
     <ErrorBoundary>
       <Layout>
@@ -40,15 +38,32 @@ export default function AlertApp() {
           <Title>
             <h1>Your Settings and Preferences</h1>
           </Title>
-          <User {...user} />
+            <User updateUser={()=>onChangedField(user)} user={user}/>
           <h3>Child(ren)</h3>
-          <ChildList {...user} />
+          <ChildList updateUser={()=>updateUser(user)} {...user} />
           <h3>Your Alert Preferences</h3>
-          <AlertList {...user} />
+          <AlertList updateUser={()=>updateUser(user)} {...user} />
         </AlertCard>
+        <Button onClick={()=>saveUser()}>Save My Changes</Button>
       </Layout>
     </ErrorBoundary>
   );
+
+  function onChangedField(user){
+    console.log('onChangedField', user)
+     setUser(user);
+    console.log(user.name)
+  }
+
+  function updateUser(user){
+    console.log('a',user.name)
+    setUser(user);
+    console.log('b',user.name)
+  }
+
+  function saveUser(){
+    console.log(user);
+  }
 }
 const Layout = styled.div`
   background: #eeeeee;
