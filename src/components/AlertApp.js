@@ -13,12 +13,10 @@ AlertApp.propTypes = {};
 export default function AlertApp() {
 
   const [user, setUser] = useState(user && user._id ? user : {});
-  const [name, setName] = useState("");
 
   if (user == undefined || user._id === undefined) {
-    getCurrentUser().then(foo => {
-      setUser(foo)
-      setName(foo.name);
+    getCurrentUser().then(fetchedUser => {
+      setUser(fetchedUser);
     });
 
     return (
@@ -54,12 +52,6 @@ export default function AlertApp() {
     </ErrorBoundary>
   );
   
-  function onChangedField(user){
-    console.log('onChangedField', user)
-     setUser(user);
-    console.log(user.name)
-  }
-
   function updateUser(u){
     console.log('a',u.name)
     setUser(user);
@@ -67,7 +59,6 @@ export default function AlertApp() {
   }
 
   function saveUser(){
-    console.log(user);
     saveCurrentUser(user);
   }
 }
