@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {Button, Modal, InputGroup, FormControl, Card } from "react-bootstrap";
 import ErrorBoundary from "react-error-boundary";
 import { confirmSms, checkCode } from "../stitch";
+import validator from "validator";
 
 ConfirmNumberModal.propTypes = {
     show: PropTypes.bool
@@ -55,19 +56,24 @@ export default function ConfirmNumberModal(props) {
   )
  
   function sendSms() {
+    if (!validator.isMobilePhone(props.phone, 'en-US')){
+      //TODO: focus on form and add message...
+      return;
+    }
     setSent(true);
     confirmSms(props.phone);
   }
 
   async function sendCode(){
-    console.log('sekrit', props.id, sekrit)
+    if (sekrit === '') {
+      //TODO: focus on formcontrol and add message....
+      return;
+    }
     await checkCode(props.id, props.phone, sekrit).then(success=>{
       if (success){
         setSuccess(true);
-        setShow(false);
+        handleClose();
         props.confirmPhoneChanges(true);
-        //set phone number to new value
-        //add checkbox to UI
       } else {
         setSuccess(false);
         props.confirmPhoneChanges(false);
