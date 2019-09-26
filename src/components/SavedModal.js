@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import {Button, Modal } from "react-bootstrap";
 import ErrorBoundary from "react-error-boundary";
 
-Confirmation.propTypes = {
+SavedModal.propTypes = {
     saveUser: PropTypes.func
   };
 
-export default function Confirmation(func) {
+export default function SavedModal(func) {
   var [show, setShow] = useState(false);
   var [success, setSuccess] = useState(false);
 

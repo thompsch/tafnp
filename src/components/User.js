@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ErrorBoundary from "react-error-boundary";
 import { Card, InputGroup, FormControl  } from "react-bootstrap";
 import validator from "validator";
+import ConfirmNumberModal from "./ConfirmNumberModal";
 
 User.propTypes = {
   user: PropTypes.object,
@@ -15,6 +16,11 @@ export default function User(props){
   var [email, setEmail] = useState(user.email);
   var [phone, setPhone] = useState(user.phone);
   
+  const [originalPhoneNumber, setOPN] = useState();
+  if (originalPhoneNumber===null) setOPN(user.phone);
+
+  var [showConfirm, setShowConfirm] = useState();
+
   return (
     <ErrorBoundary>
         <Card>
@@ -25,13 +31,26 @@ export default function User(props){
             <FormControl name="useremail" value={email} onChange={(e)=>onChangedInput(e)}/>
             <FormControl name="userphone" value={phone} onChange={(e)=>onChangedInput(e)} onBlur={(e)=>CheckNumber(e)}/>
             </Card.Body>
+            <ConfirmNumberModal show={showConfirm} phone={phone}></ConfirmNumberModal>
         </Card> 
+       
     </ErrorBoundary>
   );
 function CheckNumber(e){
   var phone = e.target.value;
-  console.log('checking phone', phone, validator.isMobilePhone(phone, 'en-US'))
-  if (!validator.isMobilePhone(phone, 'en-US')){
+  console.log('checking phone', phone, validator.isMobilePhone(phone, 'en-US'), originalPhoneNumber)
+
+  if (originalPhoneNumber !== e.target.value){
+    //this number needs to be confirmed.
+
+    console.log('oh yeah um we need to confirm that change');
+    setShowConfirm(true);
+    //call 'sendConfirmationSms' func.
+    //keep dialog open until user enters code.
+    //on comfirm, call setOPN()
+  }
+  if (!validator.isMobilePhone(phone, 'en-US')) {
+    //TODO: add Verified/Unverified icon to phone line
     //TODO: this isn't a valid phone number; show an alert of some sort...
       //TODO: send SMS to verify new number
   }

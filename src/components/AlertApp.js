@@ -6,9 +6,9 @@ import validator from "validator";
 import ChildList from "./ChildList";
 import AlertList from "./AlertList";
 import User from "./User";
-import Confirmation from "./Confirmation";
+import SavedModal from "./SavedModal";
 import { getCurrentUser,saveCurrentUser } from "./../stitch/"
-import { Card, Button, Alert } from "react-bootstrap";
+import { Card, Alert } from "react-bootstrap";
 
 AlertApp.propTypes = {};
 
@@ -57,7 +57,7 @@ export default function AlertApp() {
           <ChildList updateUser={(u)=>updateUser(u)} {...user} />
           <h3>Your Alert Preferences</h3>
           <AlertList updateUser={(u)=>updateUser(u)} {...user} />
-          <Confirmation saveUser={saveUser}></Confirmation>
+          <SavedModal saveUser={saveUser}></SavedModal>
         </Card>
       </Layout>
     </ErrorBoundary>

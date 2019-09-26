@@ -6,6 +6,8 @@ import {
   hasLoggedInUser,
   getCurrentStitchUser,
 } from "./authentication";
+import { confirmSms } from "./functions"
 
 export { app, usersCollection };
 export { loginAnonymous, logoutCurrentUser, hasLoggedInUser, getCurrentStitchUser, getCurrentUser,saveCurrentUser };
+export { confirmSms };
