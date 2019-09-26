@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import ErrorBoundary from "react-error-boundary";
 import { useStitchAuth} from "./StitchAuth";
-import { Card, CardBody, Button } from "reactstrap";
+import { Card, Button } from "react-bootstrap";
 
 Login.propTypes = {};
 export default function Login() {
@@ -11,7 +11,7 @@ export default function Login() {
     <ErrorBoundary>
       <Layout>
         <LoginCard>
-          <CardBody>
+          <Card.Body>
             <ButtonRow>
               <LoginButton onClick={() => actions.handleLogin("google")}> 
                 Log In with Google
@@ -20,7 +20,7 @@ export default function Login() {
                 Log In with Facebook
               </LoginButton>
             </ButtonRow>
-          </CardBody>
+          </Card.Body>
         </LoginCard>
       </Layout>
     </ErrorBoundary>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import {app, logoutUser } from "./../stitch";
-import { Button } from "reactstrap";
+import { Button } from "react-bootstrap";
 
 const NavbarContainer = styled.div`
   height: 60px;

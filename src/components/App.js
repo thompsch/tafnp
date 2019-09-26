@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import AlertApp from "./AlertApp";
 import Login from "./Login";
 import { StitchAuthProvider, useStitchAuth } from "./StitchAuth";
-import { Button } from "reactstrap";
+import { Button } from "react-bootstrap";
 
 App.propTypes = {};
 export default function App() {
@@ -20,12 +20,13 @@ AppUI.propTypes = {};
 function AppUI() {
   const {
     isLoggedIn,
+    currentStitchUser,
     actions: { handleLogout },
   } = useStitchAuth();
   return (
     <Layout>
       <Navbar>
-        {isLoggedIn && <Button onClick={handleLogout}>Logout</Button>}
+        {isLoggedIn && <Button variant="secondary" onClick={handleLogout}>Logout</Button>}
         <AppTitle>Text Alerts</AppTitle>
       </Navbar>
       {isLoggedIn ? <AlertApp /> : <Login />}

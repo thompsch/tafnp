@@ -2,64 +2,75 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import ErrorBoundary from "react-error-boundary";
+import validator from "validator";
 import ChildList from "./ChildList";
 import AlertList from "./AlertList";
 import User from "./User";
+import Confirmation from "./Confirmation";
 import { getCurrentUser,saveCurrentUser } from "./../stitch/"
-import { Card, CardTitle, Button, Input } from "reactstrap";
+import { Card, Button, Alert } from "react-bootstrap";
 
 AlertApp.propTypes = {};
 
 export default function AlertApp() {
 
-  const [user, setUser] = useState(user && user._id ? user : {});
+  const [user, setUser] = useState((user && user._id) ? user : {});
+  var [showConfirmation, setShowConfirmation] = useState(false);
+  var [isLoading, setIsLoading] = useState(false);
 
-  if (user == undefined || user._id === undefined) {
-    getCurrentUser().then(fetchedUser => {
-      setUser(fetchedUser);
-    });
+  if (!user || user._id === undefined) {
+
+    if (!isLoading) {
+      setIsLoading(true);
+      getCurrentUser().then(fetchedUser => {
+        setUser(fetchedUser);
+      });
+    }
 
     return (
       <ErrorBoundary>
         <Layout>
-          <AlertCard>
-            <Title>
+          <Card>
+            <Card.Title>
               <h1>Loading...</h1>
-            </Title>
-          </AlertCard>
+            </Card.Title>
+          </Card>
         </Layout>
       </ErrorBoundary>
     )
-  } 
+  }
  
   return (
     <ErrorBoundary>
       <Layout>
-        <AlertCard>
-          <Title>
+        <Card>
+          <Card.Title>
             <h1>Your Settings and Preferences</h1>
-          </Title>
-
+          </Card.Title>
+          <Card>
+          {!validator.isMobilePhone(user.phone, 'en-US') &&<Alert>It looks like you're new here! Please provide a phone number, information about your child(ren), and 
+            specify what types of alerts you'd like to receive.
+          </Alert>}
+          </Card>
           <User updateUser={(u)=>updateUser(u)} user={user}/>
- 
-          <h3>Child(ren)</h3>
+           <h3>Child(ren)</h3>
           <ChildList updateUser={(u)=>updateUser(u)} {...user} />
           <h3>Your Alert Preferences</h3>
           <AlertList updateUser={(u)=>updateUser(u)} {...user} />
-        </AlertCard>
-        <Button onClick={()=>saveUser()}>Save My Changes</Button>
+          <Confirmation saveUser={saveUser}></Confirmation>
+        </Card>
       </Layout>
     </ErrorBoundary>
   );
   
   function updateUser(u){
-    console.log('a',u.name)
     setUser(user);
-    console.log('b',user.name)
   }
 
-  function saveUser(){
-    saveCurrentUser(user);
+  async function saveUser() {
+    return await saveCurrentUser(user);
+    //console.log(result)
+    //setShowConfirmation(true);
   }
 }
 const Layout = styled.div`
@@ -71,24 +82,3 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const AlertCard = styled(Card)`
-  max-width: 600px;
-  align-items: center;
-  width: 100%;
-`;
-const Title = styled(CardTitle)`
-  margin: 0;
-  h1 {
-    padding: 20px;
-    margin: 0;
-  }
-`;
-
-// <User updateUser={()=>onChangedField(user)} user={user}/>
-
-/*
-  <Input name="username" value={name} onChange={(e)=>{user.name=(e.target.value);setName(user.name);setUser(user);}}/>
-            <Input name="useremail" value={user.email} onChange={()=>setUser(user)} />
-            <Input name="userphone" value={user.phone} onChange={()=>setUser(user)}/>
-            
-            */

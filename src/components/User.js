@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import styled from "@emotion/styled";
 import ErrorBoundary from "react-error-boundary";
-import { Card, CardBody, CardHeader, Input, InputGroup, Label } from "reactstrap";
+import { Card, InputGroup, FormControl  } from "react-bootstrap";
+import validator from "validator";
 
 User.propTypes = {
   user: PropTypes.object,
@@ -18,16 +18,24 @@ export default function User(props){
   return (
     <ErrorBoundary>
         <Card>
-          <CardHeader>Your Contract Information</CardHeader>
-          <CardBody>
-            <Input name="username" value={name} onChange={(e)=>onChangedInput(e)}/>
-            <Input name="useremail" value={email} onChange={(e)=>onChangedInput(e)}/>
-            <Input name="userphone" value={phone} onChange={(e)=>onChangedInput(e)}/>
-            </CardBody>
+          <Card.Header>Your Contract Information</Card.Header>
+          <Card.Body>
+            <InputGroup.Prepend>Name</InputGroup.Prepend>
+            <FormControl name="username" value={name} onChange={(e)=>onChangedInput(e)}/>
+            <FormControl name="useremail" value={email} onChange={(e)=>onChangedInput(e)}/>
+            <FormControl name="userphone" value={phone} onChange={(e)=>onChangedInput(e)} onBlur={(e)=>CheckNumber(e)}/>
+            </Card.Body>
         </Card> 
     </ErrorBoundary>
   );
-
+function CheckNumber(e){
+  var phone = e.target.value;
+  console.log('checking phone', phone, validator.isMobilePhone(phone, 'en-US'))
+  if (!validator.isMobilePhone(phone, 'en-US')){
+    //TODO: this isn't a valid phone number; show an alert of some sort...
+      //TODO: send SMS to verify new number
+  }
+}
   function onChangedInput(e){
     switch(e.target.name) {
           case 'username': {

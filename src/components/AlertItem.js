@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import { CheckedIcon, UncheckedIcon } from "./Icon";
-import { Card, CardBody } from "reactstrap";
+import { Card } from "react-bootstrap";
 
 AlertItem.propTypes = {
   item: PropTypes.object,
@@ -37,7 +37,7 @@ const Todo = styled(Card)`
     margin-top: 0px;
   }
 `;
-const Layout = styled(CardBody)`
+const Layout = styled(Card.Body)`
   display: flex;
   align-items: top;
   padding: 10px !important;

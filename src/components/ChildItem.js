@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { Card, CardBody, Input, InputGroup, Label } from "reactstrap";
+import { Card, InputGroup, FormControl } from "react-bootstrap";
 
 ChildItem.propTypes = {
   child: PropTypes.object,
@@ -19,11 +19,11 @@ export default function ChildItem(props) {
   
       <Todo>
         <InputGroup>
-        <Label>Name</Label><Input name='name' value={name} onChange={e=>onChangedInput(e)}/>
+        <InputGroup.Prepend>Name</InputGroup.Prepend><FormControl name='name' value={name} onChange={e=>onChangedInput(e)}/>
         </InputGroup>
         <InputGroup>
-        <Label>Grade</Label>
-        <Input name='grade' value={grade} onChange={e=>onChangedInput(e)}/>
+        <InputGroup.Prepend>Grade</InputGroup.Prepend>
+        <FormControl name='grade' value={grade} onChange={e=>onChangedInput(e)}/>
         </InputGroup>
       </Todo>
 
@@ -56,7 +56,7 @@ const Todo = styled(Card)`
     margin-top: 0px;
   }
 `;
-const Layout = styled(CardBody)`
+const Layout = styled(Card.Body)`
   display: flex;
   align-items: top;
   padding: 10px !important;
