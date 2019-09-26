@@ -6,8 +6,8 @@ import {
   hasLoggedInUser,
   getCurrentStitchUser,
 } from "./authentication";
-import { confirmSms } from "./functions"
+import { confirmSms, checkCode } from "./functions"
 
 export { app, usersCollection };
 export { loginAnonymous, logoutCurrentUser, hasLoggedInUser, getCurrentStitchUser, getCurrentUser,saveCurrentUser };
-export { confirmSms };
+export { confirmSms, checkCode };

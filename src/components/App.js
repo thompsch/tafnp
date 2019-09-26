@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import AlertApp from "./AlertApp";
 import Login from "./Login";
 import { StitchAuthProvider, useStitchAuth } from "./StitchAuth";
-import { Button } from "react-bootstrap";
+import { Button } from "react-bootstrap"; 
 
 App.propTypes = {};
 export default function App() {
