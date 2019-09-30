@@ -35,7 +35,6 @@ export async function getCurrentUser() {
 }
 
 export async function saveCurrentUser(user) {
-  console.log("I'm going to replace the existing user with this new info", user)
   return await usersCollection.findOneAndReplace({_id: user._id}, user, {upsert:true})
   .then(result=>{
     return true}
@@ -44,3 +43,26 @@ export async function saveCurrentUser(user) {
     return false;}
   );
 }
+
+export async function isAdmin(){
+  const csu= await getCurrentStitchUser();
+    if (!csu) return false;
+    return await usersCollection.findOne({oauth_id:csu.id})
+    .then(async user=>{
+      if (!user || !user._id) return false;
+      return await appSettingsCollection.findOne().then(settings=>{
+          return settings.admins.includes(user._id.toString());
+      }).catch(ohshit=>{
+        console.error(ohshit);
+        return false;}
+      );
+    }).catch(ohshit=>{
+      console.error(ohshit);
+      return false;}
+    );
+}
+
+export async function getAppSettings(){
+  return await appSettingsCollection.findOne().then(settings=>{
+    return settings;
+})}

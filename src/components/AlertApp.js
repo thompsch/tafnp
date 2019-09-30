@@ -7,7 +7,7 @@ import ChildList from "./ChildList";
 import AlertList from "./AlertList";
 import User from "./User";
 import SavedModal from "./SavedModal";
-import { getCurrentUser,saveCurrentUser } from "./../stitch/"
+import { getCurrentUser, saveCurrentUser } from "./../stitch/"
 import { Card, Alert } from "react-bootstrap";
 
 AlertApp.propTypes = {};
