@@ -12,7 +12,6 @@ export default function AlertTypesList(props) {
    const [alerts, setAlerts] = useState(props.alerts);
    const onChecked = props.onChecked;
 
-   console.log('ATL4', alerts)
     if (alerts) {
         return (alerts.map((item, index) => (
             <InputGroup key={index}>

@@ -7,10 +7,10 @@ import {
   hasLoggedInUser,
   getCurrentStitchUser,
 } from "./authentication";
-import { confirmSms, checkCode, sendText } from "./functions"
+import { confirmSms, checkCode, sendText, softDeleteUser } from "./functions"
 
 export { app, usersCollection };
 export { loginAnonymous, logoutCurrentUser, hasLoggedInUser,
    getCurrentStitchUser, getCurrentUser, saveCurrentUser, 
    isAdmin, getAppSettings };
-export { confirmSms, checkCode, sendText };
+export { confirmSms, checkCode, sendText, softDeleteUser };

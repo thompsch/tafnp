@@ -31,15 +31,15 @@ export async function getCurrentUser() {
           })
       })
     } else return result})
-  .catch(ohshit=>{console.error(ohshit)});
+  .catch(gollygee=>{console.error(gollygee)});
 }
 
 export async function saveCurrentUser(user) {
   return await usersCollection.findOneAndReplace({_id: user._id}, user, {upsert:true})
   .then(result=>{
     return true}
-  ).catch(ohshit=>{
-    console.error(ohshit);
+  ).catch(gollygee=>{
+    console.error(gollygee);
     return false;}
   );
 }
@@ -51,13 +51,13 @@ export async function isAdmin(){
     .then(async user=>{
       if (!user || !user._id) return false;
       return await appSettingsCollection.findOne().then(settings=>{
-          return settings.admins.includes(user._id.toString());
-      }).catch(ohshit=>{
-        console.error(ohshit);
+          return {isAdmin:settings.admins.includes(user._id.toString()), user:user};
+      }).catch(gollygee=>{
+        console.error(gollygee);
         return false;}
       );
-    }).catch(ohshit=>{
-      console.error(ohshit);
+    }).catch(gollygee=>{
+      console.error(gollygee);
       return false;}
     );
 }

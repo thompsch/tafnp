@@ -16,7 +16,7 @@ export default function SavedModal(func) {
 
   return (
     <ErrorBoundary>
-      <Button variant="primary" onClick={()=>test()}>Save My Changes</Button>
+      <Button variant="info" onClick={()=>test()}>Save My Changes</Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{success ? "Saved" : "Error"}</Modal.Title>

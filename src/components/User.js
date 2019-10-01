@@ -31,7 +31,7 @@ export default function User(props){
   return (
     <ErrorBoundary>
         <Card>
-          <Card.Header>Your Contract Information</Card.Header>
+          <Card.Header>Your Contact Information</Card.Header>
           <Card.Body>
             <InputGroup>
             <InputGroup.Prepend>Name</InputGroup.Prepend>
@@ -44,7 +44,6 @@ export default function User(props){
             <InputGroup>
             <InputGroup.Prepend>Phone (for texts)</InputGroup.Prepend>
             <FormControl name="userphone" value={phone} onChange={(e)=>onChangedInput(e)} onBlur={(e)=>CheckNumber(e)}/>
-            
             <InputGroup.Append>
                 {!isValidNumber && <GoX color="red" size='30' data-for='novalid' data-tip="This is not a valid phone number." />}
                 { (isValidNumber && confirmed) ? 
@@ -88,7 +87,6 @@ function CheckNumber(e){
           }
           case 'userphone': {
             user.phone = e.target.value;
-            console.log(user.phone, originalPhoneNumber)
             if (user.phone === originalPhoneNumber) setConfirmed(true);
             else if (confirmed===true) setConfirmed(false)
             setPhone(user.phone);
@@ -100,7 +98,6 @@ function CheckNumber(e){
   }
 
   function confirmPhoneChanges(success){
-    console.log('success in dialog?', success)
     if (success) { setConfirmed(true);}
     else {
       setPhone(originalPhoneNumber);

@@ -7,7 +7,7 @@ import AdminApp from "./AdminApp";
 import Login from "./Login";
 import { StitchAuthProvider, useStitchAuth } from "./StitchAuth";
 import { isAdmin } from "./../stitch/";
-import { Button } from "react-bootstrap"; 
+import { Container, Button } from "react-bootstrap"; 
 
 App.propTypes = {};
 export default function App() {
@@ -24,12 +24,12 @@ AppUI.propTypes = {};
 
 function AppUI() {
 
-      
+const [user, setUser] = useState();
 const [admin, setAdmin] = useState();
 if (admin === undefined){
   isAdmin().then(result=>{
-    console.log('isAdmin', result)
-    setAdmin(result);
+    setAdmin(result.isAdmin);
+    setUser(result.user);
   });
 }
 
@@ -41,21 +41,20 @@ if (admin === undefined){
   
 function NextScreen(){
     {
-      console.log(isLoggedIn, admin);
       if (!isLoggedIn) {return <Login />}
       else if (isLoggedIn && !admin) {return <AlertApp />}
-      else if (isLoggedIn && admin) {return <AdminApp />}
+      else if (isLoggedIn && admin) {return <AdminApp {...user} />}
     }
   }
 
   return (
-    <Layout>
+    <Container>
       <Navbar>
-        {isLoggedIn && <Button variant="secondary" onClick={handleLogout}>Logout</Button>}
-        <AppTitle>Text Alerts</AppTitle>
+        {isLoggedIn && <Button variant="info" onClick={handleLogout}>Logout</Button>}
+        <AppTitle>WIWS Text Alerts</AppTitle>
       </Navbar>
       <NextScreen/>
-    </Layout>
+    </Container>
   );
 }
 const Layout = styled.div`

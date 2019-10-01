@@ -7,16 +7,18 @@ import { Button, Card, ListGroup, InputGroup, FormControl, Dropdown } from "reac
 import { useStitchAuth } from "./StitchAuth";
 import  AlertTypesList  from "./AlertTypesList";
 import { getAppSettings, app, sendText } from "./../stitch/";
+import AllUsersTable from "./AllUsersTable";
 
 
 AdminApp.propTypes = {};
 
-export default function AdminApp() {
+export default function AdminApp(u) {
 
-
-  const [user, setUser] = useState((user && user._id) ? user : {});
+  const [user, setUser] = useState((u && u._id) ? u : {});
   var [showSendText, setShowSendText] = useState(false);
   var [showChangeSettings, setShowChangeSettings] = useState(false);
+  var [showAllUsers, setShowAllUsers] = useState(false);
+
     const [textBody, setTextBody] = useState();
     const [textCategory, setTextCategory] = useState();
 
@@ -32,7 +34,6 @@ export default function AdminApp() {
                 alerts.push({alert:item.type, checked:false})));
             
             setSelectedAlerts(alerts);
-            console.log('setSelectedAlerts', setSelectedAlerts)
         }
     })
 
@@ -45,13 +46,13 @@ export default function AdminApp() {
       <Layout>
         <Card>
           <Card.Title>
-            <h1>Welcome WIWS Admin</h1>
+            <h1>Welcome {user.name != null? user.name : 'WIWS Admininistrator!'}</h1>
           </Card.Title>
           <h3>You can do the following things from this page:</h3>
           <ListGroup>
-              <ListGroup.Item><Button variant="secondary" onClick={()=>{setShowSendText(true)}}>Send a Group Text</Button></ListGroup.Item>
-              <ListGroup.Item>Send a Text to an Individual</ListGroup.Item>
-              <ListGroup.Item><Button variant="secondary" onClick={()=>{setShowChangeSettings(true)}}>Change my personal alert settings</Button></ListGroup.Item>
+              <ListGroup.Item><Button variant="info" onClick={()=>{setShowSendText(true)}}>Send a Group Text</Button></ListGroup.Item>
+              <ListGroup.Item><Button variant="info" onClick={()=>{setShowAllUsers(true)}}>Manage Users</Button></ListGroup.Item>
+              <ListGroup.Item><Button variant="info" onClick={()=>{setShowChangeSettings(true)}}>Change my personal alert settings</Button></ListGroup.Item>
               <ListGroup.Item><Button variant="secondary" onClick={handleLogout}>Logout</Button></ListGroup.Item>
               </ListGroup>
         </Card>
@@ -59,7 +60,6 @@ export default function AdminApp() {
             <InputGroup>
                 <InputGroup.Prepend>Text Message</InputGroup.Prepend>
                 <FormControl as="textarea" name="textBody" onChange={(e)=>setTextBody(e.target.value)}/>
-                
             </InputGroup>
           <ListGroup>
              <AlertTypesList onChecked={(a,b)=>onChecked(a,b)} alerts={selectedAlerts} />
@@ -69,15 +69,16 @@ export default function AdminApp() {
          {showChangeSettings && <Card id='changesettings'>
             <AlertApp/>
         </Card>}
+        {showAllUsers && <Card id='showUsers'>
+            <AllUsersTable />
+        </Card>}
       </Layout>
     </ErrorBoundary>
   );
 
   function onChecked(index, checked){
-      if (index) console.log('AA', index, checked);
       selectedAlerts[index].checked = checked;
       setSelectedAlerts(selectedAlerts);
-      console.log('AA', selectedAlerts);
   }
   
   function sendTheText(){
@@ -86,7 +87,6 @@ export default function AdminApp() {
         if (a.checked) sendTo.push(a.alert);
     })
 
-    console.log(textBody, "will be sent to", sendTo);
     sendText(textBody, sendTo);
   }
 
