@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import ErrorBoundary from "react-error-boundary";
 import ChildItem from "./ChildItem";
+import { ListGroup } from "react-bootstrap";
 
 ChildList.propTypes = {
   user: PropTypes.object
@@ -13,7 +14,7 @@ export default function ChildList(props) {
 
   return (
     <ErrorBoundary>
-      <List>
+      <ListGroup>
         {user.children.map((child, index) => (
           <ChildItem
             key={child.name}
@@ -22,7 +23,7 @@ export default function ChildList(props) {
             onChange={changedChild}
           />
         ))}
-      </List>
+      </ListGroup>
     </ErrorBoundary>
   );
 
@@ -33,8 +34,3 @@ export default function ChildList(props) {
   }
 }
 
-const List = styled.ul`
-  padding: 0;
-  margin-top: 10px;
-  width: 450px;
-`;

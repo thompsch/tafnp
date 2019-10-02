@@ -25,13 +25,6 @@ export async function sendText(message, groups) {
 
 export async function softDeleteUser(user) {
   return await app.callFunction("softDeleteUser", [user]).then(response=>{
-      if (response && response.status === "success"){
-        console.log(response)
-       return true;
-      }
-      else {
-        console.error(response)
-        return false;
-    }
+    return response;
   });
 }

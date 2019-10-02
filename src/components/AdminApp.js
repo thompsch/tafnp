@@ -50,10 +50,11 @@ export default function AdminApp(u) {
           </Card.Title>
           <h3>You can do the following things from this page:</h3>
           <ListGroup>
-              <ListGroup.Item><Button variant="info" onClick={()=>{setShowSendText(true)}}>Send a Group Text</Button></ListGroup.Item>
-              <ListGroup.Item><Button variant="info" onClick={()=>{setShowAllUsers(true)}}>Manage Users</Button></ListGroup.Item>
-              <ListGroup.Item><Button variant="info" onClick={()=>{setShowChangeSettings(true)}}>Change my personal alert settings</Button></ListGroup.Item>
-              <ListGroup.Item><Button variant="secondary" onClick={handleLogout}>Logout</Button></ListGroup.Item>
+              <ListGroup.Item><Button variant="info" onClick={()=>{hideAll();setShowSendText(true)}}>Send a Group Text</Button></ListGroup.Item>
+              <ListGroup.Item><Button variant="info" onClick={()=>{hideAll();setShowAllUsers(true)}}>Manage Users</Button></ListGroup.Item>
+              <ListGroup.Item><Button variant="info" onClick={()=>{hideAll();setShowChangeSettings(true)}}>Change my account settings</Button></ListGroup.Item>
+              <ListGroup.Item><Button variant="light" onClick={()=>{hideAll();}}>Add an Admin</Button></ListGroup.Item>
+              <ListGroup.Item><Button className="pull-right" variant="secondary" onClick={handleLogout}>Logout</Button></ListGroup.Item>
               </ListGroup>
         </Card>
         {showSendText && <Card>
@@ -75,6 +76,12 @@ export default function AdminApp(u) {
       </Layout>
     </ErrorBoundary>
   );
+
+  function hideAll(){
+    setShowAllUsers(false);
+    setShowChangeSettings(false);
+    setShowSendText(false);
+  }
 
   function onChecked(index, checked){
       selectedAlerts[index].checked = checked;

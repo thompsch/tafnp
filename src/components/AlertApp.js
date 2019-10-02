@@ -15,7 +15,7 @@ AlertApp.propTypes = {};
 export default function AlertApp() {
 
   const [user, setUser] = useState((user && user._id) ? user : {});
-  var [showConfirmation, setShowConfirmation] = useState(false);
+  //var [showConfirmation, setShowConfirmation] = useState(false);
   var [isLoading, setIsLoading] = useState(false);
 
   if (!user || user._id === undefined) {
@@ -24,6 +24,7 @@ export default function AlertApp() {
       setIsLoading(true);
       getCurrentUser().then(fetchedUser => {
         setUser(fetchedUser);
+        setIsLoading(false);
       });
     }
 
@@ -45,14 +46,14 @@ export default function AlertApp() {
             <h1>Your Settings and Preferences</h1>
           </Card.Header>
           <Card>
-          {!validator.isMobilePhone(user.phone, 'en-US') &&<Alert variant='warning'>It looks like you're new here! Please provide a phone number, information about your child(ren), and 
+          {!validator.isMobilePhone(user.phone, 'en-US') && <Alert variant='warning'>It looks like you're new here! Please provide a phone number, information about your child(ren), and 
             specify what types of alerts you'd like to receive.
           </Alert>}
           </Card>
           <User updateUser={(u)=>updateUser(u)} user={user}/>
           <Card>
-           <Card.Header>Child(ren)</Card.Header>
-          <ChildList updateUser={(u)=>updateUser(u)} {...user} />
+            <Card.Header>Child(ren)</Card.Header>
+            <ChildList updateUser={(u)=>updateUser(u)} {...user} />
           </Card>
           <Card>
            <Card.Header>Your Alert Preferences</Card.Header>
