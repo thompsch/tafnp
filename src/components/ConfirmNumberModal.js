@@ -21,8 +21,8 @@ export default function ConfirmNumberModal(props) {
   var [success, setSuccess] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const handleClose = () =>{
-    //TODO: if we're not confirmed, reset the number.
+  const handleClose = () => {
+    console.log('handleClose', success)
     if (!success) props.confirmPhoneChanges(false);
     setShow(false);
     close();
@@ -71,9 +71,11 @@ export default function ConfirmNumberModal(props) {
     }
     await checkCode(props.id, props.phone, sekrit).then(success=>{
       if (success){
+        //console.log(success)
         setSuccess(true);
-        handleClose();
         props.confirmPhoneChanges(true);
+        handleClose();
+        
       } else {
         setSuccess(false);
         props.confirmPhoneChanges(false);

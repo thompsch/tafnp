@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import ErrorBoundary from "react-error-boundary";
 import AlertItem from "./AlertItem";
+import { ListGroup } from "react-bootstrap";
 
 AlertList.propTypes = {
   user: PropTypes.object,
@@ -14,7 +15,7 @@ export default function AlertList(props) {
   
   return (
     <ErrorBoundary>
-      <List>
+      <ListGroup>
         {user.alerts.map((item, index) => (
           <AlertItem
             key={item.type}
@@ -23,7 +24,7 @@ export default function AlertList(props) {
             toggleStatus={setAlertStatus}
           />
         ))}
-      </List>
+      </ListGroup>
     </ErrorBoundary>
   );
 

@@ -17,7 +17,7 @@ export default function User(props){
   var [name, setName] = useState(user.name);
   var [email, setEmail] = useState(user.email);
   var [phone, setPhone] = useState();
-  if (!phone) setPhone(user.phone);
+  if (!phone && user.phone.length >0) setPhone(user.phone);
   var [confirmed, setConfirmed] = useState(user.confirmed);
   
   const [originalPhoneNumber, setOPN] = useState();
@@ -48,7 +48,7 @@ export default function User(props){
                 {!isValidNumber && <GoX color="red" size='30' data-for='novalid' data-tip="This is not a valid phone number." />}
                 { (isValidNumber && confirmed) ? 
                 <GoCheck color="green" size='30' data-for='good' data-tip="This is a confirmed phone number." /> : 
-                <GoAlert color="yellow" size='30' data-for='unconfirmed' data-tip="This number has not yet been confirmed." onClick={()=>setShowConfirm(true)}/>}   
+                <GoAlert color="gold" size='30' data-for='unconfirmed' data-tip="This number has not yet been confirmed." />}   
               </InputGroup.Append>
             </InputGroup>
             {!isValidNumber && <label style={{color:'red'}}>Please enter a valid phone number</label>}
@@ -86,12 +86,15 @@ function CheckNumber(e){
             break;
           }
           case 'userphone': {
-            user.phone = e.target.value;
-            if (user.phone === originalPhoneNumber) setConfirmed(true);
-            else if (confirmed===true) setConfirmed(false)
-            setPhone(user.phone);
-            ReactToolTip.rebuild();
-            break;
+            
+            
+              user.phone = e.target.value;
+              if (user.phone === originalPhoneNumber) setConfirmed(true);
+              else if (confirmed===true) setConfirmed(false)
+              setPhone(user.phone);
+              ReactToolTip.rebuild();
+              break;
+            
         }
     }
     updateUser(user);

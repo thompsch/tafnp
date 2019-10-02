@@ -11,14 +11,10 @@ const NavbarContainer = styled.div`
   flex-direction: row-reverse;
 `;
 
-const LogoutButton = () => (
-  <Button onClick={() => onLogout() }>Log Out</Button>
-);
-
 function Navbar() {
   return (
     <NavbarContainer>
-      <LogoutButton />
+      <Button variant="secondary" onClick={() => onLogout() }>Log Out</Button>
     </NavbarContainer>
   );
 }
