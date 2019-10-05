@@ -6,6 +6,7 @@ export function confirmSms(phoneNumber) {
 
 export async function checkCode(userId, phoneNumber, code) {
   return await app.callFunction("confirmSecret", [userId.toString(), phoneNumber, code]).then(response=>{
+    console.log('function response', JSON.stringify(response))
       if (response.status === "success") return true;
       else {
         console.error(response.message);

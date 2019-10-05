@@ -7,7 +7,7 @@ import AdminApp from "./AdminApp";
 import Login from "./Login";
 import { StitchAuthProvider, useStitchAuth } from "./StitchAuth";
 import { isAdmin } from "./../stitch/";
-import { Container, Button } from "react-bootstrap"; 
+import { Container, Button, Nav, Navbar, NavItem } from "react-bootstrap"; 
 
 App.propTypes = {};
 export default function App() {
@@ -49,32 +49,29 @@ function NextScreen(){
 
   return (
     <Container>
-      <Navbar>
-        {isLoggedIn && <Button variant="info" onClick={handleLogout}>Logout</Button>}
-        <AppTitle>WIWS Text Alerts</AppTitle>
-      </Navbar>
-      <NextScreen/>
+      <Navbar bg="info" variant="light">
+        <Nav>
+    <Navbar.Brand href="wiws.org">
+      <img
+        alt="WIWS Logo"
+        src="/logo.jpg"
+        className="d-inline-block align-top" />
+     
+      
+</Navbar.Brand>
+
+      </Nav>
+      <Nav className="ml-auto">
+      <Navbar.Text><h1>WIWS Text Alert System</h1></Navbar.Text>
+      </Nav>
+      <Nav className="ml-auto">
+        
+      <NavItem>{isLoggedIn && <Button className='pull-right' variant="secondary" onClick={handleLogout}>Logout</Button>}</NavItem>
+      </Nav>
+    
+  </Navbar>
+       <NextScreen/>
     </Container>
   );
 }
-const Layout = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  * {
-    font-family: sans-serif;
-  }
-`;
-const Navbar = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  width: 100%;
-  height: 62px;
-  padding: 10px;
-  background: #5e9668;
-`;
-const AppTitle = styled.h1`
-  margin-right: auto;
-`;
+

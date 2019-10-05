@@ -13,7 +13,7 @@ export function removeAuthenticationListener(listener) {
 }
 
 export async function loginFacebook() {
-  return await app.auth.loginWithRedirect(new FacebookRedirectCredential());
+  return await app.auth.loginWithRedirect(new FacebookRedirectCredential("https://localhost:3000"));
 }
 
 export function loginAnonymous() {

@@ -17,8 +17,8 @@ export async function getCurrentUser() {
   return await usersCollection.findOne({oauth_id:csu.id})
   .then(async result=>{
     if (result === null) { //we have a new login
-
-     await appSettingsCollection.findOne().then(async appSettings=>{
+      console.log('Creating a new user!')
+     return await appSettingsCollection.findOne().then(async appSettings=>{
         return await usersCollection.insertOne({
           oauth_id: csu.id, 
           name: csu.profile.data.name, 
@@ -30,7 +30,9 @@ export async function getCurrentUser() {
             return newUser;
           })
       })
-    } else return result})
+    } else {
+      console.log('existing user found.')
+      return result}})
   .catch(gollygee=>{console.error(gollygee)});
 }
 
