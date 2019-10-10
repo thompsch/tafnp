@@ -26,7 +26,6 @@ export default function ConfirmNumberModal(props) {
   if (success) close();
 
   const handleClose = () => {
-    
     if (show) setShow(false);
     close();
   }
