@@ -6,6 +6,7 @@ import validator from "validator";
 import ConfirmNumberModal from "./ConfirmNumberModal";
 import { GoAlert, GoCheck, GoX } from "react-icons/go";
 import ReactToolTip from "react-tooltip";
+import { parsePhoneNumberFromString } from 'libphonenumber-js'
 
 User.propTypes = {
   user: PropTypes.object,
@@ -86,15 +87,14 @@ function CheckNumber(e){
             break;
           }
           case 'userphone': {
-            
-            
-              user.phone = e.target.value;
+              var formattedPhone = parsePhoneNumberFromString(e.target.value, "US");
+              console.log(formattedPhone)
+              user.phone = formattedPhone.format("E.164");
               if (user.phone === originalPhoneNumber) setConfirmed(true);
               else if (confirmed===true) setConfirmed(false)
               setPhone(user.phone);
               ReactToolTip.rebuild();
               break;
-            
         }
     }
     updateUser(user);

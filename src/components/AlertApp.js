@@ -10,12 +10,12 @@ import SavedModal from "./SavedModal";
 import { getCurrentUser, saveCurrentUser } from "./../stitch/"
 import { Card, Alert } from "react-bootstrap";
 
+
 AlertApp.propTypes = {};
 
 export default function AlertApp() {
 
   const [user, setUser] = useState((user && user._id) ? user : {});
-  //var [showConfirmation, setShowConfirmation] = useState(false);
   var [isLoading, setIsLoading] = useState(false);
 
   if (!user || user._id === undefined) {

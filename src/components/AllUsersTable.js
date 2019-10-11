@@ -14,7 +14,6 @@ AllUsersTable.propTypes = {
 };
 
 export default function AllUsersTable() {
-  
   const sortCaret = (order)=>{
     if (!order) return (<span className='pull-right'><GoChevronUp color="#ababab"/><GoChevronDown color="#ababab"/></span>);
     else if (order === 'asc') return (<span className='pull-right'><GoChevronUp color="#ababab"/><GoChevronDown/></span>);
@@ -23,8 +22,8 @@ export default function AllUsersTable() {
   }
     const [userToDelete, setUserToDelete] = useState(null);
     const [userToUpdate, setUserToUpdate] = useState(null);
-
     const [allUsers, setAllUsers] = useState([]);
+
     const columns = [{
         dataField: 'name',
          text: 'Name',
@@ -72,7 +71,7 @@ export default function AllUsersTable() {
     <ErrorBoundary>
       <BootstrapTable 
           bootstrap4 
-          keyField='confirmed' 
+          keyField='_id' 
           data={ allUsers } 
           columns={ columns } 
           cellEdit={ cellEditFactory(
