@@ -1,5 +1,6 @@
 import { RemoteMongoClient } from "mongodb-stitch-browser-sdk";
 import {getCurrentStitchUser} from "../stitch";
+import {updateUserAndSendText} from "./functions";
 import { app } from "./app";
 
 const mongoClient = app.getServiceClient(
@@ -37,14 +38,16 @@ export async function getCurrentUser() {
 }
 
 export async function saveCurrentUser(user) {
-  return await usersCollection.findOneAndReplace({_id: user._id}, user, {upsert:true})
+  return await updateUserAndSendText(user)
   .then(result=>{
-    return true}
-  ).catch(gollygee=>{
+    console.log('updated user results', result);
+    return true;
+  }).catch(gollygee=>{
     console.error(gollygee);
-    return false;}
-  );
+    return false;
+  });
 }
+
 
 export async function isAdmin(){
   const csu= await getCurrentStitchUser();
