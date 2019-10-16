@@ -81,8 +81,8 @@ export default function AllUsersTable() {
           striped hover condensed
           defaultSorted={ defaultSorted } 
           />
-        <DeleteUserModal close={()=>setUserToDelete(null)} type="delete"  show={userToDelete != null} {...userToDelete} />
-        <DeleteUserModal close={()=>setUserToUpdate(null)} type="update" show={userToUpdate != null}  {...userToUpdate} />
+        <DeleteUserModal close={()=>setUserToDelete(null)} type="delete"  show={userToDelete != null} user={userToDelete} />
+        <DeleteUserModal close={()=>setUserToUpdate(null)} type="update" show={userToUpdate != null}  user={userToUpdate} />
     </ErrorBoundary>
   ); 
 }

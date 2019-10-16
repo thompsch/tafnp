@@ -63,7 +63,11 @@ export default function User(props){
   );
   
 function CheckNumber(e){
-  var phone = e.target.value;
+  //var phone = e.target.value;
+  var formattedPhone = parsePhoneNumberFromString(e.target.value, "US");
+  console.log(formattedPhone)
+  if (formattedPhone===undefined) return;
+  var phone = formattedPhone.format("E.164");
 
   if (!validator.isMobilePhone(phone, 'en-US')){
     //TODO: focus on form and add message...
@@ -74,6 +78,7 @@ function CheckNumber(e){
      setShowConfirm(true);
   }
 }
+
   function onChangedInput(e){
     switch(e.target.name) {
           case 'username': {
@@ -87,14 +92,16 @@ function CheckNumber(e){
             break;
           }
           case 'userphone': {
-              var formattedPhone = parsePhoneNumberFromString(e.target.value, "US");
-              console.log(formattedPhone)
-              user.phone = formattedPhone.format("E.164");
+            user.phone = e.target.value
+           
+             setPhone(user.phone);
+
               if (user.phone === originalPhoneNumber) setConfirmed(true);
               else if (confirmed===true) setConfirmed(false)
-              setPhone(user.phone);
+              
               ReactToolTip.rebuild();
               break;
+              //}
         }
     }
     updateUser(user);

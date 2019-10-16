@@ -34,7 +34,7 @@ export default function DeleteUserModal(props) {
   } 
 
   const handleClose = () =>{
-    setShow(false);
+    if (show) setShow(false);
     close();
   }
 
@@ -76,12 +76,9 @@ export default function DeleteUserModal(props) {
   )
  
   function deleteUser(){
+    console.log('deleting user', user)
     softDeleteUser(user).then(result=>{
-      console.log(result)
-      //if (result){
-        //todo: display result? Or just reload the page?
         handleClose();
-     // }
     })
   }
 

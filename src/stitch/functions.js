@@ -23,6 +23,7 @@ export async function sendText(message, groups) {
     }
   });
 }
+
 export async function updateUserAndSendText(user) {
   return await app.callFunction("updateUserAndSendText", [user]).then(response=>{
     return response;
