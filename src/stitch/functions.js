@@ -23,7 +23,7 @@ export async function addPhone(phone) {
 }
 
 export async function sendTextToAll(message) {
-  return await app.callFunction("SendSMSToAll", [{'msg': message}]).then(response=>{
+  return await app.callFunction("sendSMSToAll", [{'msg': message}]).then(response=>{
       if (response && response.status === "success") return true;
       else {
         return false;
@@ -32,7 +32,7 @@ export async function sendTextToAll(message) {
 }
 
 export async function sendText(message, groups) {
-  return await app.callFunction("SendSmsToAll", [{'msg': message, 'to': groups}]).then(response=>{
+  return await app.callFunction("SendSmsByCategories", [{'msg': message, 'to': groups}]).then(response=>{
       if (response && response.status === "success") return true;
       else {
         return false;

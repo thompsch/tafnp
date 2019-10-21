@@ -7,19 +7,19 @@ import { Button, Card, ListGroup, InputGroup, FormControl, Dropdown } from "reac
 import { useStitchAuth } from "./StitchAuth";
 import { getAppSettings, sendTextToAll } from "./../stitch/";
 import AllUsersTable from "./AllUsersTable";
+import SendTextModal from "./SendTextModal";
 
 AdminApp.propTypes = {};
 
 export default function AdminApp(u) {
 
   const [user, setUser] = useState((u && u._id) ? u : {});
+  const [confirmText, setConfirmText] = useState(false);
   var [showSendText, setShowSendText] = useState(false);
   var [showChangeSettings, setShowChangeSettings] = useState(false);
   var [showAllUsers, setShowAllUsers] = useState(false);
 
     const [textBody, setTextBody] = useState();
-    const [textCategory, setTextCategory] = useState();
-
     const [appSettings, setAppSettings] = useState();
     const [selectedAlerts, setSelectedAlerts] = useState([]);
 
@@ -49,18 +49,18 @@ export default function AdminApp(u) {
           <h3>You can do the following things from this page:</h3>
           <ListGroup>
               <ListGroup.Item><Button variant="info" onClick={()=>{hideAll();setShowSendText(true)}}>Send a Group Text</Button></ListGroup.Item>
-              <ListGroup.Item><Button variant="info" onClick={()=>{hideAll();setShowAllUsers(true)}}>Manage Users</Button></ListGroup.Item>
-              <ListGroup.Item><Button variant="info" onClick={()=>{hideAll();setShowChangeSettings(true)}}>Change my account settings</Button></ListGroup.Item>
+              <ListGroup.Item><Button variant="info" onClick={()=>{hideAll();setShowChangeSettings(true)}}>Change my personal settings</Button></ListGroup.Item>
               <ListGroup.Item><Button variant="light" onClick={()=>{hideAll();}}>Add an Admin</Button></ListGroup.Item>
               <ListGroup.Item><Button className="pull-right" variant="secondary" onClick={handleLogout}>Logout</Button></ListGroup.Item>
               </ListGroup>
         </Card>
         {showSendText && <Card>
+          <Card.Header><b>Send a Text Message </b></Card.Header>
             <InputGroup>
-                <InputGroup.Prepend>Text Message</InputGroup.Prepend>
+                <InputGroup.Prepend>Message:&nbsp;</InputGroup.Prepend>
                 <FormControl as="textarea" name="textBody" onChange={(e)=>setTextBody(e.target.value)}/>
+                {textBody != "" && <Button variant="info" onClick={()=>sendTheText()}>Send</Button>}
             </InputGroup>
-          <Button variant="secondary" onClick={()=>sendTheText()}>Send</Button>
         </Card>}
          {showChangeSettings && <Card id='changesettings'>
             <AlertApp/>
@@ -69,25 +69,20 @@ export default function AdminApp(u) {
             <AllUsersTable />
         </Card>}
       </Layout>
-    </ErrorBoundary>
+      <SendTextModal close={()=>setConfirmText(false)} type="sendModal" show={confirmText} message={textBody} 
+          sendText={()=>{sendTextToAll(textBody);setConfirmText(false)}} />
+       </ErrorBoundary>
   );
 
-  function hideAll(){
+  function hideAll() {
     setShowAllUsers(false);
     setShowChangeSettings(false);
     setShowSendText(false);
   }
-
-  function onChecked(index, checked){
-      selectedAlerts[index].checked = checked;
-      setSelectedAlerts(selectedAlerts);
-  }
   
   function sendTheText(){
-    //sendText(textBody, sendTo);
-    sendTextToAll(textBody);
+    setConfirmText(true);
   }
-
 }
 
 const Layout = styled.div`

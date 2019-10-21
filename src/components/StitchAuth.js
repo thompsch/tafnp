@@ -18,7 +18,6 @@ const StitchAuthContext = React.createContext();
 
 // Create a React Hook that lets us get data from our auth context
 export function useStitchAuth() {
-
   const context = React.useContext(StitchAuthContext);
   if (!context) {
     throw new Error(`useStitchAuth must be used within a StitchAuthProvider`);
@@ -62,7 +61,6 @@ export function StitchAuthProvider(props) {
   }, []);
 
   const handleLogin = async (provider) => {
-    console.log('handleLogin', provider)
     if (authState.isLoggedIn) {
       logoutCurrentUser();
     }
