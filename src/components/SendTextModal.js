@@ -35,11 +35,16 @@ export default function SendTextModal(props) {
             {message}
             <Modal.Footer>
                <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-               <Button variant="danger" onClick={sendText}>Send It!</Button> 
+               <Button variant="danger" onClick={sendAndClose}>Send It!</Button> 
             </Modal.Footer>
         </Modal.Body>
       </Modal>
       </ErrorBoundary>
   )
+
+  function sendAndClose(){
+   sendText();
+   handleClose();
+  }
 }
 
