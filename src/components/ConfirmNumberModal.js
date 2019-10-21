@@ -13,7 +13,6 @@ export default function ConfirmNumberModal(props) {
   var close = props.close;
   var [show, setShow] = useState(false);
   var sekrit = '';
-  var userId = props.id;
 
   const sekritInput = React.createRef();
 
@@ -77,7 +76,7 @@ export default function ConfirmNumberModal(props) {
       sekritInput.current.focus();
       return;
     }
-    await checkCode(props.id, props.phone, sekrit).then(success=>{
+    await checkCode(props.phone, sekrit).then(success=>{
       console.log(success);
       setSuccess(success);
       props.confirmPhoneChanges(success);

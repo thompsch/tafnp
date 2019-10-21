@@ -5,10 +5,8 @@ import ErrorBoundary from "react-error-boundary";
 import AlertApp from "./AlertApp";
 import { Button, Card, ListGroup, InputGroup, FormControl, Dropdown } from "react-bootstrap";
 import { useStitchAuth } from "./StitchAuth";
-import  AlertTypesList  from "./AlertTypesList";
-import { getAppSettings, app, sendText } from "./../stitch/";
+import { getAppSettings, sendTextToAll } from "./../stitch/";
 import AllUsersTable from "./AllUsersTable";
-
 
 AdminApp.propTypes = {};
 
@@ -62,9 +60,6 @@ export default function AdminApp(u) {
                 <InputGroup.Prepend>Text Message</InputGroup.Prepend>
                 <FormControl as="textarea" name="textBody" onChange={(e)=>setTextBody(e.target.value)}/>
             </InputGroup>
-          <ListGroup>
-             <AlertTypesList onChecked={(a,b)=>onChecked(a,b)} alerts={selectedAlerts} />
-          </ListGroup>
           <Button variant="secondary" onClick={()=>sendTheText()}>Send</Button>
         </Card>}
          {showChangeSettings && <Card id='changesettings'>
@@ -89,12 +84,8 @@ export default function AdminApp(u) {
   }
   
   function sendTheText(){
-    var sendTo = [];
-    selectedAlerts.forEach(a=>{
-        if (a.checked) sendTo.push(a.alert);
-    })
-
-    sendText(textBody, sendTo);
+    //sendText(textBody, sendTo);
+    sendTextToAll(textBody);
   }
 
 }

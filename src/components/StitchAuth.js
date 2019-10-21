@@ -62,14 +62,16 @@ export function StitchAuthProvider(props) {
   }, []);
 
   const handleLogin = async (provider) => {
-    if (!authState.isLoggedIn) {
+    console.log('handleLogin', provider)
+    if (authState.isLoggedIn) {
+      logoutCurrentUser();
+    }
       switch(provider) {
         case "anonymous": return loginAnonymous()
         case "facebook": return loginFacebook()
         case "google": return loginGoogle()
-        default: {}
+        default: return {}
       }
-    }
   }
   
   const handleLogout = async () => {

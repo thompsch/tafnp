@@ -1,6 +1,6 @@
 import { RemoteMongoClient } from "mongodb-stitch-browser-sdk";
-import {getCurrentStitchUser} from "../stitch";
-import {updateUserAndSendText} from "./functions";
+import { getCurrentStitchUser } from "../stitch";
+import { updateUserAndSendText } from "./functions";
 import { app } from "./app";
 
 const mongoClient = app.getServiceClient(
@@ -17,23 +17,22 @@ export async function getCurrentUser() {
   const csu = getCurrentStitchUser();
   return await usersCollection.findOne({oauth_id:csu.id})
   .then(async result=>{
-    if (result === null) { //we have a new login
+    if (result === null) { 
+      //we have a new login
       console.log('Creating a new user!')
-     return await appSettingsCollection.findOne().then(async appSettings=>{
-        return await usersCollection.insertOne({
-          oauth_id: csu.id, 
-          name: csu.profile.data.name, 
-          email: csu.profile.data.email,
-          phone: '(xxx)yyy-zzzz',
-          alerts: appSettings.alert_types,
-          children: [{name:'', grade:''}] })
-          .then(newUser=>{
-            return newUser;
-          })
-      })
-    } else {
-      console.log('existing user found.')
-      return result}})
+      return await appSettingsCollection.findOne().then(async appSettings=>{
+          return await usersCollection.insertOne({
+            oauth_id: csu.id, 
+            name: csu.profile.data.name, 
+            email: csu.profile.data.email,
+            phone: ('(xxx)yyy-zzzz'),
+            alerts: appSettings.alert_types,
+            children: [{name:'', grade:''}] })
+            .then(newUser=>{
+              return newUser;
+            })
+        })
+    } else { return result; }})
   .catch(gollygee=>{console.error(gollygee)});
 }
 
@@ -47,7 +46,6 @@ export async function saveCurrentUser(user) {
     return false;
   });
 }
-
 
 export async function isAdmin(){
   const csu= await getCurrentStitchUser();
@@ -65,6 +63,12 @@ export async function isAdmin(){
       console.error(gollygee);
       return false;}
     );
+}
+
+export async function isPhoneUnique(phone){
+  return await appSettingsCollection.findOne().then(settings=>{
+    return !settings.phone_numbers.includes(phone);
+  })
 }
 
 export async function getAppSettings(){

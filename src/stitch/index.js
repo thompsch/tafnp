@@ -1,16 +1,14 @@
 import { app } from "./app";
 import { usersCollection, getCurrentUser, saveCurrentUser, 
-  isAdmin, getAppSettings } from "./mongodb";
+  isAdmin, getAppSettings, isPhoneUnique } from "./mongodb";
 import {
   loginAnonymous,
   logoutCurrentUser,
   hasLoggedInUser,
-  getCurrentStitchUser,
+  getCurrentStitchUser
 } from "./authentication";
-import { confirmSms, checkCode, sendText, softDeleteUser } from "./functions"
+import { confirmSms, checkCode, sendText, sendTextToAll, softDeleteUser,addPhone } from "./functions"
 
-export { app, usersCollection };
-export { loginAnonymous, logoutCurrentUser, hasLoggedInUser,
-   getCurrentStitchUser, getCurrentUser, saveCurrentUser, 
-   isAdmin, getAppSettings };
-export { confirmSms, checkCode, sendText, softDeleteUser };
+export { app, usersCollection, loginAnonymous, logoutCurrentUser, hasLoggedInUser,
+   getCurrentStitchUser, getCurrentUser, saveCurrentUser, isAdmin, getAppSettings, 
+   isPhoneUnique , confirmSms, checkCode, sendText, sendTextToAll, softDeleteUser, addPhone };

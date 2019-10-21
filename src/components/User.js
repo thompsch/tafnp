@@ -7,7 +7,7 @@ import ConfirmNumberModal from "./ConfirmNumberModal";
 import { GoAlert, GoCheck, GoX } from "react-icons/go";
 import ReactToolTip from "react-tooltip";
 import { parsePhoneNumberFromString } from 'libphonenumber-js'
-
+ 
 User.propTypes = {
   user: PropTypes.object,
   updateUser: PropTypes.func
@@ -36,11 +36,11 @@ export default function User(props){
           <Card.Body>
             <InputGroup>
             <InputGroup.Prepend>Name</InputGroup.Prepend>
-            <FormControl name="username" value={name} onChange={(e)=>onChangedInput(e)}/>
+            <FormControl name="username" value={name && " "} onChange={(e)=>onChangedInput(e)}/>
             </InputGroup>
             <InputGroup>
             <InputGroup.Prepend>Email</InputGroup.Prepend>
-            <FormControl name="useremail" value={email} onChange={(e)=>onChangedInput(e)}/>
+            <FormControl name="useremail" value={email && " "} onChange={(e)=>onChangedInput(e)}/>
             </InputGroup>
             <InputGroup>
             <InputGroup.Prepend>Phone (for texts)</InputGroup.Prepend>

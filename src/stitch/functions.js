@@ -4,8 +4,8 @@ export function confirmSms(phoneNumber) {
   app.callFunction("sendConfirmationSms", [phoneNumber]);
 }
 
-export async function checkCode(userId, phoneNumber, code) {
-  return await app.callFunction("confirmSecret", [userId.toString(), phoneNumber, code]).then(response=>{
+export async function checkCode(phoneNumber, code) {
+  return await app.callFunction("confirmSecret", [phoneNumber, code]).then(response=>{
     console.log('function response', JSON.stringify(response))
       if (response.status === "success") return true;
       else {
@@ -15,8 +15,24 @@ export async function checkCode(userId, phoneNumber, code) {
   })
 }
 
+export async function addPhone(phone) {
+  console.log('Adding phone', phone)
+  return await app.callFunction("addPhone", [phone]).then(response=>{
+    return response;
+  });
+}
+
+export async function sendTextToAll(message) {
+  return await app.callFunction("SendSMSToAll", [{'msg': message}]).then(response=>{
+      if (response && response.status === "success") return true;
+      else {
+        return false;
+    }
+  });
+}
+
 export async function sendText(message, groups) {
-  return await app.callFunction("SendSmsByCategories", [{'msg': message, 'to': groups}]).then(response=>{
+  return await app.callFunction("SendSmsToAll", [{'msg': message, 'to': groups}]).then(response=>{
       if (response && response.status === "success") return true;
       else {
         return false;

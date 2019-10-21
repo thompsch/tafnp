@@ -17,12 +17,12 @@ export async function loginFacebook() {
 }
 
 export function loginAnonymous() {
-  // Allow users to log in anonymously
   const credential = new AnonymousCredential();
   return app.auth.loginWithCredential(credential);
 }
 
 export async function loginGoogle() { 
+  console.log('logon with google')
   return await app.auth.loginWithRedirect(new GoogleRedirectCredential());
 }
 
