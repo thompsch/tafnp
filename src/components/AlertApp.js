@@ -14,6 +14,9 @@ import { Card, Alert } from "react-bootstrap";
 AlertApp.propTypes = {};
 
 export default function AlertApp(props) {
+  Text.defaultProps = Text.defaultProps || {}
+  Text.defaultProps.style =  { fontFamily: 'Alegreya Sans SCfont' }
+  
   const [user, setUser] = useState((user && user._id) ? user : {});
   var [isLoading, setIsLoading] = useState(false);
 

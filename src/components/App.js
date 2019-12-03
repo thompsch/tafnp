@@ -14,7 +14,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 
 App.propTypes = {};
-export default function App() {
+export default function App() {  
   return (
     <StitchAuthProvider>
       <AppUI />
@@ -34,11 +34,11 @@ const [confirmed, setConfirmed] = useState(false);
 const [isUnique, setIsUnique] = useState(true);
 const isValidNumber = (phone && validator.isMobilePhone(phone, 'en-US'));
 const [originalPhoneNumber, setOPN] = useState();
-  if (phone && originalPhoneNumber===undefined) {
+  if (phone && (originalPhoneNumber===undefined)) {
     setOPN(phone);
   }
 
-console.log('phone?', phone)
+console.log('phone & orig?', phone, originalPhoneNumber)
 if (user && phone) {
   user.phone = phone;
 }
@@ -56,14 +56,10 @@ if (admin === undefined){
   } = useStitchAuth();
   
 function NextScreen(){
-  console.log(phone, isUnique, confirmed)
-    if (phone === originalPhoneNumber){
-      setIsUnique(false);
-      setConfirmed(true);
-    }
-    else {
-      setConfirmed(false);
+  console.log("phone, unique, confirmed", phone, isUnique, confirmed)
+    if (phone !== originalPhoneNumber){
       setIsUnique(true);
+      setConfirmed(false);
     }
     {
       if (phone) {
@@ -71,7 +67,7 @@ function NextScreen(){
               <Card>
             {(isUnique && !confirmed) && <Alert variant='warning'>
             Welcome! We need to verify your phone number before we can send you text messages. Please check the phone number and 
-              click the "Verify" button.
+              click the Verify button.
             </Alert>}
           <InputGroup>
             <FormControl name="userphone" value={phone} onChange={(e)=>{phoneChanged(e)}}/>
@@ -112,7 +108,7 @@ function NextScreen(){
     <Container>
       <Navbar bg="info" variant="light">
         <Nav>
-          <Navbar.Brand href="wiws.org">
+          <Navbar.Brand href="http://wiws.org" target="_blank">
             <img
               alt="WIWS Logo"
               src="/logo.jpg"
@@ -127,6 +123,18 @@ function NextScreen(){
           </Nav>
       </Navbar>
       <NextScreen/>
+      <hr/>
+      <Alert variant='info'>
+        <Card>
+        <Card.Body>
+          <Card.Title>Privacy Notice</Card.Title>
+          <Card.Text>
+          By providing your phone number, you agree to let WIWS administrative staff send you text messages regarding the school. You can unsubscribe any time by replying “STOP” to the phone number you receive the texts from.
+          We store your phone number on secure servers, and do not associate the number with any personally-identifiable information.
+          </Card.Text>
+        </Card.Body>
+            </Card>
+            </Alert>
     </Container>
   );
 
@@ -155,9 +163,9 @@ function NextScreen(){
         return;
       } else {
         setIsUnique(true);
-          if (originalPhoneNumber !== phone){
+          
             setShowConfirm(true);
-          }
+          
         ReactToolTip.rebuild();
       }
     }

@@ -1,5 +1,5 @@
 import { RemoteMongoClient } from "mongodb-stitch-browser-sdk";
-import { getCurrentStitchUser } from "../stitch";
+import { getCurrentStitchUser, loginAnonymous } from "../stitch";
 import { updateUserAndSendText } from "./functions";
 import { app } from "./app";
 
@@ -66,8 +66,12 @@ export async function isAdmin(){
 }
 
 export async function isPhoneUnique(phone){
-  return await appSettingsCollection.findOne().then(settings=>{
-    return !settings.phone_numbers.includes(phone);
+  console.log('calling Stitch to confirm number', phone, getCurrentStitchUser())
+  return await loginAnonymous().then(async () => {
+    return await appSettingsCollection.findOne().then(settings=>{
+      console.log('does phone number already exist?', settings.phone_numbers.includes(phone) )
+      return !settings.phone_numbers.includes(phone);
+    })
   })
 }
 
